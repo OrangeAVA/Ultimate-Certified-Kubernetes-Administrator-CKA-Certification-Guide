@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vol-emptydir
+spec:
+  containers:
+  - name: image-processor
+    image: nginx
+    volumeMounts:
+    - mountPath: /scratch
+      name: scratch-volume
+  volumes:
+  - name: scratch-volume
+    emptyDir: {}
+

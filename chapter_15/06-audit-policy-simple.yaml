@@ -1,0 +1,17 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+  # Log metadata level for all read and write requests
+  - level: Metadata
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Don't log requests to a particular non-sensitive namespace
+  - level: None
+    namespaces: ["kube-system"]
+
+  # Log request and response bodies for "pods" resource in "default" namespace
+  - level: RequestResponse
+    resources:
+    - group: "" # "" indicates the core API group
+      resources: ["pods"]
+    namespaces: ["default"]

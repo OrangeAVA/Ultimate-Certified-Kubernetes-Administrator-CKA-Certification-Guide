@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-cache
+spec:
+  containers:
+    - name: web-server
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: nginx-cache
+          mountPath: /var/cache/nginx   # Mount point for NGINX cache
+  volumes:
+    - name: nginx-cache
+      hostPath:
+        path: /var/nginx-cache         # Host directory to be used as the cache storage
+        type: DirectoryOrCreate
+

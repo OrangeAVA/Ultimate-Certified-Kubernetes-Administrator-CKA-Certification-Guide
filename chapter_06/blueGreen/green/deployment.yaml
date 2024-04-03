@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounting-green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounting
+      release: "2.0"
+  template:
+    metadata:
+      labels:
+        app: accounting
+        release: "2.0"
+    spec:
+      containers:
+      - image: brainupgrade/accounting:2.0
+        name: accounting
+        ports:
+        - containerPort: 8080
+          protocol: TCP

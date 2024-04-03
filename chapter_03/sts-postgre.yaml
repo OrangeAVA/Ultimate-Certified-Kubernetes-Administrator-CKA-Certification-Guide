@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgre
+  labels:
+    app:  postgre
+spec:
+  clusterIP: None
+  selector:
+    app: postgre
+  ports:
+  - port: 5432
+    targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgre
+  labels:
+    app: postgre
+spec:
+  serviceName: "postgre"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgre
+  template:
+    metadata:
+      labels:
+        app: postgre
+    spec:
+      containers:
+      - name: postgre
+        image: postgres
+        env:
+        - name: POSTGRES_DB
+          value: accounts
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_PASSWORD
+          value: pwd2sec8
+        - name: PGDATA
+          value: /data/pgdata
+        ports:
+        - containerPort: 5432
+          name: db
+        volumeMounts:
+        - name: data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+

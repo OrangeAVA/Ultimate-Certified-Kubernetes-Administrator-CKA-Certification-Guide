@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ml-training-pod
+spec:
+  containers:
+    - name: data-preparation
+      image: data-prep-image
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+    - name: model-training
+      image: model-train-image
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+  volumes:
+    - name: shared-data
+      emptyDir: {}
+

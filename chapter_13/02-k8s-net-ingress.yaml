@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: k8s-net
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: k8s-net.brainupgrade.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: k8s-net
+            port:
+              number: 80
+        path: /?(.*)
+        pathType: ImplementationSpecific
+
+   

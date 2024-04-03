@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ecomm
+  name: ecomm
+spec:
+  replicas: 9
+  selector:
+    matchLabels:
+      app: ecomm
+      release: v1
+  template:
+    metadata:
+      labels:
+        app: ecomm
+        release: v1
+    spec:
+      containers:
+      - image: brainupgrade/ecomm:1.0
+        name: ecomm
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+
+          

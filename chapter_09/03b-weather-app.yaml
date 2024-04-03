@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather
+  template:
+    metadata:
+      labels:
+        app: weather
+    spec:
+      containers:
+      - name: weather
+        image: brainupgrade/configmap:3
+        ports:
+        - containerPort: 8000
+        command: ["gunicorn", "-b", "0.0.0.0:8000", "app:app","--api-url-weather $(API_URL_WEATHER)","--api-url-geocoding $(API_URL_GEOCODING)"]
+        env:
+          - name: ENVIRONMENT
+            valueFrom:
+              configMapKeyRef:
+                name: weather-config
+                key: ENVIRONMENT
+          - name: API_URL_WEATHER
+            valueFrom:
+              configMapKeyRef:
+                name: weather-config
+                key: API_URL_WEATHER
+          - name: API_URL_GEOCODING
+            valueFrom:
+              configMapKeyRef:
+                name: weather-config
+                key: API_URL_GEOCODING
+

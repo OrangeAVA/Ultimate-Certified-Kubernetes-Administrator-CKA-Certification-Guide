@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello
+spec:
+  containers:
+  - image: docker.io/brainupgrade/hello:1.0
+    name: hello
+
+    

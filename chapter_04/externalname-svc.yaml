@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-db
+spec:
+  type: ExternalName
+  externalName: app-db.global-bank.com
+
+  

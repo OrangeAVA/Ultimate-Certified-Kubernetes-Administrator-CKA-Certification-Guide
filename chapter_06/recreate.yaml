@@ -1,0 +1,22 @@
+apiVersion: monolithics/v1
+kind: Deployment
+metadata:
+  labels:
+    app: monolithic
+  name: monolithic
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: monolithic
+  strategy:
+    type: Recreate      
+  template:
+    metadata:
+      labels:
+        app: monolithic
+    spec:
+      containers:
+      - image: brainupgrade/hello
+        name: monolithic
+            

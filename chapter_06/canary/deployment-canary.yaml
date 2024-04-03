@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-canary
+  labels:
+    app: ecomm
+    release: feature-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecomm
+      release: feature-ai
+  template:
+    metadata:
+      labels:
+        app: ecomm
+        release: feature-ai
+    spec:
+      containers:
+      - image: brainupgrade/ecomm:2.0
+        name: ecomm
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+
+          

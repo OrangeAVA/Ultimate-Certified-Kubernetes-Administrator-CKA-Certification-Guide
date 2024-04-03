@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: payments
+  name: payments-developer
+rules:
+- apiGroups: ["", "apps", "extensions"]
+  resources: ["deployments", "replicasets", "pods", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: weather-config
+data:
+  API_URL_WEATHER: "https://api.open-meteo.com/v1"
+  API_URL_GEOCODING: "https://geocoding-api.open-meteo.com/v1"
+  ENVIRONMENT: "uat"

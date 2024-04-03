@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: weatherdb
+spec:
+  selector:
+    matchLabels:
+      app: weatherdb
+  serviceName: "weatherdb"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: weatherdb
+    spec:
+      containers:
+      - name: weatherdb
+        image: bitnami/mongodb:latest
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGODB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: weather-secret
+              key: db_username
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: weather-secret
+              key: db_password
+        - name: MONGODB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: weather-secret
+              key: db_root_password
+        - name: MONGODB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: weather-secret
+              key: db_name
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db        
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
